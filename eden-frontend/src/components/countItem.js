@@ -6,7 +6,7 @@ const CountItem = (props) => {
             <div className="w-[43px] h-[41px] text-[34px] font-medium leading-[41.15px]">
                 {props.value}
             </div>
-            <div className="text-[13px] leading-[15.73px] text-white/60">{props.title}</div>
+            <div className="text-[13px] leading-[15.73px] text-dark-green">{props.title}</div>
         </div>
     );
 }

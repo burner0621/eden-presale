@@ -4,10 +4,8 @@ export const IDL = {
   "constants": [
     {
       "name": "PRESALE_SEED",
-      "type": {
-        "defined": "&[u8]"
-      },
-      "value": "b\"CLUB_PRESALE_SEED\""
+      "type": "bytes",
+      "value": "[67, 76, 85, 66, 95, 80, 82, 69, 83, 65, 76, 69, 95, 83, 69, 69, 68]"
     }
   ],
   "instructions": [
@@ -41,14 +39,6 @@ export const IDL = {
         },
         {
           "name": "usdtTokenMintAddress",
-          "type": "publicKey"
-        },
-        {
-          "name": "usdcTokenMintAddress",
-          "type": "publicKey"
-        },
-        {
-          "name": "jupTokenMintAddress",
           "type": "publicKey"
         },
         {
@@ -535,14 +525,6 @@ export const IDL = {
             "type": "publicKey"
           },
           {
-            "name": "usdcTokenMintAddress",
-            "type": "publicKey"
-          },
-          {
-            "name": "jupTokenMintAddress",
-            "type": "publicKey"
-          },
-          {
             "name": "softcapAmount",
             "type": "u64"
           },
@@ -556,14 +538,6 @@ export const IDL = {
           },
           {
             "name": "depositUsdtTokenAmount",
-            "type": "u64"
-          },
-          {
-            "name": "depositUsdcTokenAmount",
-            "type": "u64"
-          },
-          {
-            "name": "depositJupTokenAmount",
             "type": "u64"
           },
           {
@@ -696,6 +670,6 @@ export const IDL = {
     }
   ],
   "metadata": {
-    "address": "2g4jbSt1Z7PDYfRHKVXo38h75a7FcRsqxK9NVH7uusJu"
+    "address": "CovuzQ7tEFfgqywdsubnsrnEVdR9dNsbC3pFoApnxJWn"
   }
 }

@@ -7,10 +7,8 @@ import {
     PRESALE_AUTHORITY,
     TOKEN_PUBKEY,
     USDT_TOKEN_PUBKEY,
-    USDC_TOKEN_PUBKEY,
-    JUP_TOKEN_PUBKEY,
-    JUP_PRICEFEED_ID,
-    TOKEN_PRESALE_HARDCAP
+    TOKEN_PRESALE_HARDCAP,
+    SOL_PRICEFEED_ID
 } from "../constants"
 
 import usePresale from "../hooks/usePresale";
@@ -67,68 +65,68 @@ const PresalePart = () => {
     return (
         <div className="w-full display-flex justify-content-center align-items-center">
             {
-                // <div className="grid grid-cols-4 items-center gap-2 mb-5">
-                //     <button
-                //         className="px-5 py-2 bg-[#d00711] rounded-full text-[#eff3f6] font-inter text-sm font-bold"
-                //         onClick={onCreatePresale}
-                //     >
-                //         Create Presale
-                //     </button>
-                //     <button
-                //         className="px-5 py-2 bg-[#d00711] rounded-full text-[#eff3f6] font-inter text-sm font-bold"
-                //         onClick={onBuyToken}
-                //     >
-                //         Buy Token
-                //     </button>
-                //     <button
-                //         className="px-5 py-2 bg-[#d00711] rounded-full text-[#eff3f6] font-inter text-sm font-bold"
-                //         onClick={() => onDepositToken(TOKEN_PUBKEY, JUP_PRICEFEED_ID, TOKEN_PRESALE_HARDCAP)}
-                //     >
-                //         Deposit MintToken
-                //     </button>
-                //     <button
-                //         className="px-5 py-2 bg-[#d00711] rounded-full text-[#eff3f6] font-inter text-sm font-bold"
-                //         onClick={() => onDepositToken(USDT_TOKEN_PUBKEY, JUP_PRICEFEED_ID, 1)}
-                //     >
-                //         Deposit USDTToken
-                //     </button>
-                //     <button
-                //         className="px-5 py-2 bg-[#d00711] rounded-full text-[#eff3f6] font-inter text-sm font-bold"
-                //         onClick={onUpdatePresale}
-                //     >
-                //         Update Presale
-                //     </button>
-                //     <button
-                //         className="px-5 py-2 bg-[#d00711] rounded-full text-[#eff3f6] font-inter text-sm font-bold"
-                //         onClick={onClaimClub}
-                //     >
-                //         Claim Club
-                //     </button>
-                //     <button
-                //         className="px-5 py-2 bg-[#d00711] rounded-full text-[#eff3f6] font-inter text-sm font-bold"
-                //         onClick={onWithdrawSol}
-                //     >
-                //         Withdraw Sol
-                //     </button>
-                //     <button
-                //         className="px-5 py-2 bg-[#d00711] rounded-full text-[#eff3f6] font-inter text-sm font-bold"
-                //         onClick={() => onWithdrawToken(TOKEN_PUBKEY)}
-                //     >
-                //         Withdraw MintToken
-                //     </button>
-                //     <button
-                //         className="px-5 py-2 bg-[#d00711] rounded-full text-[#eff3f6] font-inter text-sm font-bold"
-                //         onClick={() => onWithdrawToken(USDT_TOKEN_PUBKEY)}
-                //     >
-                //         Withdraw USDTToken
-                //     </button>
-                //     <button
-                //         className="px-5 py-2 bg-[#d00711] rounded-full text-[#eff3f6] font-inter text-sm font-bold"
-                //         onClick={() => onUpdateAuth()}
-                //     >
-                //         Update Auth
-                //     </button>
-                // </div>
+                <div className="grid grid-cols-4 items-center gap-2 mb-5">
+                    <button
+                        className="px-5 py-2 bg-[#d00711] rounded-full text-[#eff3f6] font-inter text-sm font-bold"
+                        onClick={onCreatePresale}
+                    >
+                        Create Presale
+                    </button>
+                    <button
+                        className="px-5 py-2 bg-[#d00711] rounded-full text-[#eff3f6] font-inter text-sm font-bold"
+                        onClick={onBuyToken}
+                    >
+                        Buy Token
+                    </button>
+                    <button
+                        className="px-5 py-2 bg-[#d00711] rounded-full text-[#eff3f6] font-inter text-sm font-bold"
+                        onClick={() => onDepositToken(TOKEN_PUBKEY, SOL_PRICEFEED_ID, TOKEN_PRESALE_HARDCAP)}
+                    >
+                        Deposit MintToken
+                    </button>
+                    <button
+                        className="px-5 py-2 bg-[#d00711] rounded-full text-[#eff3f6] font-inter text-sm font-bold"
+                        onClick={() => onDepositToken(USDT_TOKEN_PUBKEY, SOL_PRICEFEED_ID, 100)}
+                    >
+                        Deposit USDTToken
+                    </button>
+                    <button
+                        className="px-5 py-2 bg-[#d00711] rounded-full text-[#eff3f6] font-inter text-sm font-bold"
+                        onClick={onUpdatePresale}
+                    >
+                        Update Presale
+                    </button>
+                    <button
+                        className="px-5 py-2 bg-[#d00711] rounded-full text-[#eff3f6] font-inter text-sm font-bold"
+                        onClick={onClaimClub}
+                    >
+                        Claim Club
+                    </button>
+                    <button
+                        className="px-5 py-2 bg-[#d00711] rounded-full text-[#eff3f6] font-inter text-sm font-bold"
+                        onClick={onWithdrawSol}
+                    >
+                        Withdraw Sol
+                    </button>
+                    <button
+                        className="px-5 py-2 bg-[#d00711] rounded-full text-[#eff3f6] font-inter text-sm font-bold"
+                        onClick={() => onWithdrawToken(TOKEN_PUBKEY)}
+                    >
+                        Withdraw MintToken
+                    </button>
+                    <button
+                        className="px-5 py-2 bg-[#d00711] rounded-full text-[#eff3f6] font-inter text-sm font-bold"
+                        onClick={() => onWithdrawToken(USDT_TOKEN_PUBKEY)}
+                    >
+                        Withdraw USDTToken
+                    </button>
+                    <button
+                        className="px-5 py-2 bg-[#d00711] rounded-full text-[#eff3f6] font-inter text-sm font-bold"
+                        onClick={() => onUpdateAuth()}
+                    >
+                        Update Auth
+                    </button>
+                </div>
             }
             <div className="px-4 flex flex-col lg:flex-row items-center justify-center">
                 <DescriptionPart />

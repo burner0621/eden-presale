@@ -17,10 +17,7 @@ import ThemeContext from '../context/themeContext';
 import usePresale from "../hooks/usePresale.js"
 
 import {
-    JUP_PRICEFEED_ID,
-    JUP_TOKEN_PUBKEY,
     USDT_TOKEN_PUBKEY,
-    USDC_TOKEN_PUBKEY,
     PRICE_PER_TOKEN
 } from "../constants";
 
@@ -71,12 +68,8 @@ const PresaleCard = () => {
         }
         if (tokens[dropIndex].ft === "SOL") { buyToken(quoteAmount); }
         else {
-            if (tokens[dropIndex].ft === "JUP") {
-                depositToken(JUP_TOKEN_PUBKEY, JUP_PRICEFEED_ID, quoteAmount)
-            } else if (tokens[dropIndex].ft === "USDT") {
-                depositToken(USDT_TOKEN_PUBKEY, JUP_PRICEFEED_ID, quoteAmount)
-            } else if (tokens[dropIndex].ft === "USDC") {
-                depositToken(USDC_TOKEN_PUBKEY, JUP_PRICEFEED_ID, quoteAmount)
+            if (tokens[dropIndex].ft === "USDT") {
+                depositToken(USDT_TOKEN_PUBKEY, SOL_PRICEFEED_ID, quoteAmount)
             }
         }
     };
@@ -178,7 +171,7 @@ const renderer = ({
     } else {
         // Render a countdown
         return (
-            <div className="flex flex-row justify-between mt-4">
+            <div className="flex flex-row justify-between mt-4 text-black">
                 <CountItem title="DAYS" value={`${days>=10?days.toString():'0' + days.toString()}`}></CountItem>
                 <div className="flex flex-row items-center text-[32px] font-normal leading-[38.73px]">:</div>
                 <CountItem title="HRS" value={`${hours>=10?hours.toString():'0' + hours.toString()}`}></CountItem>

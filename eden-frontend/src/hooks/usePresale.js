@@ -21,11 +21,8 @@ import {
     TOKEN_PUBKEY,
     USER_SEED,
     SOL_TOKEN_PUBKEY,
-    USDC_TOKEN_PUBKEY,
     USDT_TOKEN_PUBKEY,
-    JUP_TOKEN_PUBKEY,
     SOL_PRICEFEED_ID,
-    JUP_PRICEFEED_ID
   } from "../constants";
   import { toast } from "react-toastify";
   import { SystemProgram, PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
@@ -60,7 +57,7 @@ import {
     useEffect(() => {
   
       const getPresaleInfo = async () => {
-        if (program && !transactionPending) {
+            if (program && !transactionPending) {
           try {
             setLoading(true);
             const [presale_info, presale_bump] = findProgramAddressSync(
@@ -72,11 +69,12 @@ import {
               program.programId
             );
             const info = await program.account.presaleInfo.fetch(presale_info);
+            console.log (info.startTime.toString(), info.tokenMintAddress.toString(), "DDDDDDDDDDDD")
             setStartTime(info.startTime);
             setEndTime(info.endTime);
             setTotalBuyAmount(info.soldTokenAmount);
           } catch (error) {
-            console.log(error);
+            console.log( error);
           } finally {
             setLoading(false);
           }
@@ -116,7 +114,7 @@ import {
       if (program && publicKey) {
         try {
           if (tokenSymbol === "USDT" || tokenSymbol === "USDC") return 1;
-          const price_feed_id = tokenSymbol === "SOL" ? SOL_PRICEFEED_ID : tokenSymbol === "JUP" ? JUP_PRICEFEED_ID : null
+          const price_feed_id = tokenSymbol === "SOL" ? SOL_PRICEFEED_ID : null
           if (!price_feed_id) return 0
           let {data} = await connection.getAccountInfo(price_feed_id) || {};
           if (!data) return 0
@@ -154,14 +152,14 @@ import {
               TOKEN_PUBKEY,
               SOL_TOKEN_PUBKEY,
               USDT_TOKEN_PUBKEY,
-              USDC_TOKEN_PUBKEY,
-              JUP_TOKEN_PUBKEY,
+              PRESALE_WALLET_PUBKEY,
+              0,
               new anchor.BN(10 ** TOKEN_DECIMAL), // softcap
               new anchor.BN(bigIntHardcap.toString()), // hardcap
               new anchor.BN(bigIntBuyerHardcap.toString()), // maxTokenAmountPerAddress
               new anchor.BN(tokenPrice), // price per token
-              new anchor.BN(new Date("2024-02-24T12:00:00Z").getTime() / 1000), // start time
-              new anchor.BN(new Date("2024-03-20T12:00:00Z").getTime() / 1000), // end time
+              new anchor.BN(new Date("2024-05-10T12:00:00Z").getTime() / 1000), // start time
+              new anchor.BN(new Date("2024-06-20T12:00:00Z").getTime() / 1000), // end time
               PRESALE_ID // presale id
             )
             .accounts({
@@ -247,8 +245,8 @@ import {
               new anchor.BN(tokenPrice), // pricePerToken
               new anchor.BN(10 ** TOKEN_DECIMAL), //softcapAmount
               new anchor.BN(bigIntHardcap), // hardcapAmount
-              new anchor.BN(new Date("2024-02-18T17:12:00Z").getTime() / 1000), // start time
-              new anchor.BN(new Date("2024-02-19T19:00:00Z").getTime() / 1000), // end time
+              new anchor.BN(new Date("2024-04-18T17:12:00Z").getTime() / 1000), // start time
+              new anchor.BN(new Date("2024-04-19T19:00:00Z").getTime() / 1000), // end time
               PRESALE_ID // presale id
             )
             .accounts({

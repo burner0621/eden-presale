@@ -10,13 +10,14 @@ import { config } from "../config"
 export const WalletConnectProvider = ({ children }) => {
     
     // The network can be set to 'devnet', 'testnet', or 'mainnet-beta'.
-    // const network = config.isMainnet ? WalletAdapterNetwork.Mainnet : WalletAdapterNetwork.Devnet
-    const network = WalletAdapterNetwork.Mainnet
+    const network = config.isMainnet ? WalletAdapterNetwork.Mainnet : WalletAdapterNetwork.Devnet
+    // const network = WalletAdapterNetwork.Mainnet
 
     const endpoint = useMemo(() => {
+        return config.devNetRpcUrl;
         if (network === WalletAdapterNetwork.Mainnet) {
-            // return config.isMainnet ? config.mainNetRpcUrl : config.devNetRpcUrl
-            return 'https://ultra-quick-frost.solana-mainnet.quiknode.pro/37bcbcb0976ff9f271aaf13e3bee2452de366636/'
+            return config.isMainnet ? config.mainNetRpcUrl : config.devNetRpcUrl
+            // return 'https://ultra-quick-frost.solana-mainnet.quiknode.pro/37bcbcb0976ff9f271aaf13e3bee2452de366636/'
         }
 
         return clusterApiUrl(network)
