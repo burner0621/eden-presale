@@ -267,45 +267,6 @@ import {
       }
     };
 
-    const updateAuth = async () => {
-      if (program && publicKey) {
-        try {
-          setTransactionPending(true);
-          const [presale_info, presale_bump] = findProgramAddressSync(
-            [
-              utf8.encode(PRESALE_SEED),
-              PRESALE_AUTHORITY.toBuffer(),
-              new Uint8Array([PRESALE_ID]),
-            ],
-            program.programId
-          );
-  
-          const tx = await program.methods
-            .updateAuth(
-              PRESALE_ID // presale id
-            )
-            .accounts({
-              presaleInfo: presale_info,
-              newAuth: new PublicKey(
-                "Av26fcGRp9x3wJv63Se2xVoQn1bvNNyP8TXyctWket8f"
-              ),
-              authority: publicKey,
-              presaleAuthority: PRESALE_AUTHORITY,
-              systemProgram: SystemProgram.programId,
-            })
-            .rpc();
-          toast.success("Successfully initialized user.");
-          return false;
-        } catch (error) {
-          console.log(error);
-          toast.error(error.toString());
-          return false;
-        } finally {
-          setTransactionPending(false);
-        }
-      }
-    };
-
     const depositToken = async (depositingToken, pythAccount, amount) => {
       if (program && publicKey) {
         try {
@@ -573,7 +534,6 @@ import {
       getPrice,
       withdrawSol,
       withdrawToken,
-      updateAuth,
       startTime,
       endTime,
       buyAmount,
