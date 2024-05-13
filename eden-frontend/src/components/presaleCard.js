@@ -45,7 +45,8 @@ const PresaleCard = () => {
 
     const _setRatio = useCallback(async () => {
         const price = await getPrice(tokens[dropIndex].ft)
-        if (price) setRatio(parseInt(Number(price) / PRICE_PER_TOKEN))
+        console.log (PRICE_PER_TOKEN / Number(price), price, "EEEEEEEEEEEE")
+        if (Number(price) > 0) setRatio(parseInt(PRICE_PER_TOKEN / Number(price)))
         else setRatio(0)
     }, [dropIndex, publicKey])
 
@@ -56,10 +57,6 @@ const PresaleCard = () => {
     useEffect(() => {
         setTokenAmount(quoteAmount * ratio)
     }, [quoteAmount, ratio])
-
-    // useEffect(() => {
-    //     setQuoteAmount(tokenAmount / ratio)
-    // }, [tokenAmount])
 
     const onBuyToken = async () => {
         if (balance < quoteAmount) {
@@ -77,7 +74,7 @@ const PresaleCard = () => {
     return (
         <div className="w-full md:w-[407px] rounded-3xl p-8 border border-solid border-dark-green flex flex-col mt-[50px] lg:ml-[50px] xl:ml-[206px] font-grotesk">
             <div className="w-full flex flex-col">
-                <div className="text-[14px] leading-[17px] tracking-wide uppercase text-left">
+                <div className="text-[14px] leading-[17px] tracking-wide uppercase text-left text-black">
                     {Date.now() < startTime * 1000 && "Pre-Sale Starts In"}
                     {Date.now() >= startTime * 1000 && Date.now() < endTime * 1000 && "Pre-Sale Ends In"}
                     {Date.now() > endTime * 1000 && ""}
@@ -116,10 +113,10 @@ const PresaleCard = () => {
                     transactionPending={transactionPending}
                 />
                 <div className="flex flex-col mt-8">
-                    <div className="w-full h-0 border-t border-black opacity-10" />
-                    <div className="flex flex-row items-center justify-center text-[14px] font-normal leading-[16.94px] mt-5">
-                        <div className="flex flex-row items-center mr-2">
-                            <img src='/assets/icon/eden.svg' className="mr-1"/>
+                    <div className="w-full h-0 border-t border-black opacity-10 text-black" />
+                    <div className="flex flex-row items-center justify-center text-[14px] font-normal leading-[16.94px] mt-5 text-black">
+                        <div className="flex flex-row items-center mr-2 text-black">
+                            <img src='/assets/icon/eden.svg' className="mr-1 w-5 h-5"/>
                             <span>{ratio} EDN</span>
                         </div>
                         =
@@ -128,7 +125,7 @@ const PresaleCard = () => {
                             {tokens[dropIndex].ft === "USDT" && <img src='/assets/img/usdt.png' className="w-5 h-5" />}
                             {tokens[dropIndex].ft === "USDC" && <img src='/assets/img/usdc.svg' className="w-5 h-5" />}
                             {tokens[dropIndex].ft === "JUP" && <img src='/assets/img/jup.svg' className="w-5 h-5" />}
-                            <span className="ml-1">1 {tokens[dropIndex].ft}</span>
+                            <span className="ml-1 text-black">1 {tokens[dropIndex].ft}</span>
                         </div>
                     </div>
                 </div>

@@ -2,7 +2,7 @@
 seeds = false
 skip-lint = false
 [programs.devnet]
-token_presale = "CovuzQ7tEFfgqywdsubnsrnEVdR9dNsbC3pFoApnxJWn"
+token_presale = "FBHBauX9kYhjQEtMPbhK64HFRUpVWvMJB6AdYs6f5o9U"
 
 [registry]
 url = "https://api.devnet.solana.com/"

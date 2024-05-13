@@ -27,6 +27,7 @@ const PresalePart = () => {
         withdrawSol,
         withdrawToken,
         buyToken,
+        updateAuth
     } = usePresale();
 
     const onCreatePresale = async () => {
@@ -43,6 +44,10 @@ const PresalePart = () => {
 
     const onWithdrawToken = async (withdrawingToken) => {
         await withdrawToken(withdrawingToken);
+    };
+
+    const onUpdateAuth = async () => {
+        await updateAuth();
     };
   
     const onUpdatePresale = async () => {
@@ -115,6 +120,12 @@ const PresalePart = () => {
                         onClick={() => onWithdrawToken(USDT_TOKEN_PUBKEY)}
                     >
                         Withdraw USDTToken
+                    </button>
+                    <button
+                        className="px-5 py-2 bg-[#d00711] rounded-full text-[#eff3f6] font-inter text-sm font-bold"
+                        onClick={() => onUpdateAuth()}
+                    >
+                        Update Auth
                     </button>
                 </div>
             }

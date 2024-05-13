@@ -11,6 +11,7 @@ import {
     BUYER_HARDCAP,
     BUYER_TOKEN_HARDCAP,
     PRESALE_AUTHORITY,
+    PRESALE_WALLET_PUBKEY,
     PRESALE_ID,
     PRESALE_PROGRAM_PUBKEY,
     PRESALE_SEED,
@@ -23,6 +24,10 @@ import {
     SOL_TOKEN_PUBKEY,
     USDT_TOKEN_PUBKEY,
     SOL_PRICEFEED_ID,
+    START_TIME,
+    END_TIME,
+    SOL_TOKEN_DECIMAL,
+    USDT_TOKEN_DECIMAL
   } from "../constants";
   import { toast } from "react-toastify";
   import { SystemProgram, PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
@@ -69,7 +74,6 @@ import {
               program.programId
             );
             const info = await program.account.presaleInfo.fetch(presale_info);
-            console.log (info.startTime.toString(), info.tokenMintAddress.toString(), "DDDDDDDDDDDD")
             setStartTime(info.startTime);
             setEndTime(info.endTime);
             setTotalBuyAmount(info.soldTokenAmount);
@@ -97,7 +101,6 @@ import {
             const info = await program.account.userInfo.fetch(userInfo);
             setBuyAmount(info.buyTokenAmount);
             setClaimedAmount(info.claimAmount);
-            console.log("User Info : ", info);
           } catch (error) {
             console.log(error);
           } finally {
@@ -113,8 +116,8 @@ import {
     const getPrice = async (tokenSymbol) => {
       if (program && publicKey) {
         try {
-          if (tokenSymbol === "USDT" || tokenSymbol === "USDC") return 1;
-          const price_feed_id = tokenSymbol === "SOL" ? SOL_PRICEFEED_ID : null
+          if (tokenSymbol === "SOL") return 1;
+          const price_feed_id = tokenSymbol === "USDT" ? SOL_PRICEFEED_ID : null
           if (!price_feed_id) return 0
           let {data} = await connection.getAccountInfo(price_feed_id) || {};
           if (!data) return 0
@@ -152,14 +155,13 @@ import {
               TOKEN_PUBKEY,
               SOL_TOKEN_PUBKEY,
               USDT_TOKEN_PUBKEY,
-              PRESALE_WALLET_PUBKEY,
-              0,
+              new anchor.BN(0),
               new anchor.BN(10 ** TOKEN_DECIMAL), // softcap
               new anchor.BN(bigIntHardcap.toString()), // hardcap
               new anchor.BN(bigIntBuyerHardcap.toString()), // maxTokenAmountPerAddress
               new anchor.BN(tokenPrice), // price per token
-              new anchor.BN(new Date("2024-05-10T12:00:00Z").getTime() / 1000), // start time
-              new anchor.BN(new Date("2024-06-20T12:00:00Z").getTime() / 1000), // end time
+              new anchor.BN(START_TIME.getTime() / 1000), // start time
+              new anchor.BN(END_TIME.getTime() / 1000), // end time
               PRESALE_ID // presale id
             )
             .accounts({
@@ -192,7 +194,6 @@ import {
             ],
             program.programId
           );
-          console.log("HHHHH - presale_info", presale_info.toString());
           const tx = await program.methods
             .withdrawSol(
               PRESALE_ID // presale id
@@ -245,8 +246,9 @@ import {
               new anchor.BN(tokenPrice), // pricePerToken
               new anchor.BN(10 ** TOKEN_DECIMAL), //softcapAmount
               new anchor.BN(bigIntHardcap), // hardcapAmount
-              new anchor.BN(new Date("2024-04-18T17:12:00Z").getTime() / 1000), // start time
-              new anchor.BN(new Date("2024-04-19T19:00:00Z").getTime() / 1000), // end time
+              new anchor.BN(START_TIME.getTime() / 1000), // start time
+              new anchor.BN(END_TIME.getTime() / 1000), // end time
+              new anchor.BN(0), // wallet count
               PRESALE_ID // presale id
             )
             .accounts({
@@ -255,7 +257,47 @@ import {
               systemProgram: SystemProgram.programId,
             })
             .rpc();
+        
           toast.success("Successfully updated presale.");
+          return false;
+        } catch (error) {
+          console.log(error);
+          toast.error(error.toString());
+          return false;
+        } finally {
+          setTransactionPending(false);
+        }
+      }
+    };
+
+    const updateAuth = async () => {
+      if (program && publicKey) {
+        try {
+          setTransactionPending(true);
+          const [presale_info, presale_bump] = findProgramAddressSync(
+            [
+              utf8.encode(PRESALE_SEED),
+              PRESALE_AUTHORITY.toBuffer(),
+              new Uint8Array([PRESALE_ID]),
+            ],
+            program.programId
+          );
+  
+          const tx = await program.methods
+            .updateAuth(
+              PRESALE_ID // presale id
+            )
+            .accounts({
+              presaleInfo: presale_info,
+              newAuth: new PublicKey(
+                "B7AM6s1cEukJsNmDdtN1FTTqLYLpr1BokBUfJiHVWArk"
+              ),
+              authority: publicKey,
+              presaleAuthority: PRESALE_AUTHORITY,
+              systemProgram: SystemProgram.programId,
+            })
+            .rpc();
+          toast.success("Successfully initialized user.");
           return false;
         } catch (error) {
           console.log(error);
@@ -301,9 +343,15 @@ import {
               owner: presale_info,
             });
   
+          const toAssociatedWalletTokenAccount =
+            await anchor.utils.token.associatedAddress({
+              mint: depositingToken,
+              owner: PRESALE_WALLET_PUBKEY,
+            });
           // Use BigInt for large number calculations
+          const tokenDecimal = depositingToken.toBase58() === USDT_TOKEN_PUBKEY.toBase58() ? USDT_TOKEN_DECIMAL : TOKEN_DECIMAL
           const depositAmount =
-            BigInt(amount * (10 ** TOKEN_DECIMAL));
+            BigInt(amount * (10 ** tokenDecimal));
           
           const tx = await program.methods
             .depositToken(
@@ -316,8 +364,10 @@ import {
               fromAssociatedTokenAccount,
               // fromAuthority: publicKey,
               toAssociatedTokenAccount,
+              toAssociatedWalletTokenAccount,
               presaleInfo: presale_info,
               payer: publicKey,
+              presaleWallet: PRESALE_WALLET_PUBKEY,
               rent: anchor.web3.SYSVAR_RENT_PUBKEY,
               systemProgram: anchor.web3.SystemProgram.programId,
               tokenProgram: anchor.utils.token.TOKEN_PROGRAM_ID,
@@ -326,6 +376,7 @@ import {
               pythAccount,
             })
             .rpc();
+          
           toast.success("Successfully deposited token.");
           return false;
         } catch (error) {
@@ -359,11 +410,11 @@ import {
             ],
             program.programId
           );
-  
+
           // Use BigInt for large number calculations
   
           const bigIntSolAmount =
-            BigInt(amount * (10 ** 9));
+            BigInt(amount * (10 ** SOL_TOKEN_DECIMAL));
   
           const tx = await program.methods
             .buyToken(
@@ -372,6 +423,7 @@ import {
             )
             .accounts({
               presaleInfo,
+              presaleWallet: PRESALE_WALLET_PUBKEY,
               presaleAuthority: PRESALE_AUTHORITY,
               userInfo,
               buyer: publicKey,
@@ -382,6 +434,7 @@ import {
               pythSolAccount: SOL_PRICEFEED_ID
             })
             .rpc();
+
           toast.success("Token purchase was successful.");
           return false;
         } catch (error) {
@@ -512,8 +565,8 @@ import {
               tokenProgram: anchor.utils.token.TOKEN_PROGRAM_ID,
               associatedTokenProgram: ASSOCIATED_PROGRAM_ID,
             })
-            .rpc();
-          toast.success("Token withdraw was successful.");
+            .rpc()
+
           return false;
         } catch (error) {
           console.log(error);
@@ -534,6 +587,7 @@ import {
       getPrice,
       withdrawSol,
       withdrawToken,
+      updateAuth,
       startTime,
       endTime,
       buyAmount,

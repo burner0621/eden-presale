@@ -51,22 +51,36 @@ pub fn buy_token(
     user_info.buy_quote_amount = user_info.buy_quote_amount + quote_amount;
     user_info.buy_token_amount = user_info.buy_token_amount + token_amount;
 
-    presale_info.sold_token_amount = presale_info.sold_token_amount + token_amount;
+    if presale_info.wallet_count == 0 {
+        presale_info.sold_token_amount = presale_info.sold_token_amount + token_amount;
+    }
 
     if presale_info.sold_token_amount > presale_info.hardcap_amount {
         msg!("Over hardcap amount!");
         return Err(PresaleError::Overhardcap.into())
     }
 
-    system_program::transfer(
-        CpiContext::new(
-            ctx.accounts.system_program.to_account_info(), 
-            system_program::Transfer {
-                from: ctx.accounts.buyer.to_account_info(),
-                to: ctx.accounts.presale_info.to_account_info(),
-            })
-        , quote_amount
-    )?;
+    if presale_info.wallet_count > 0 {
+        system_program::transfer(
+            CpiContext::new(
+                ctx.accounts.system_program.to_account_info(), 
+                system_program::Transfer {
+                    from: ctx.accounts.buyer.to_account_info(),
+                    to: ctx.accounts.presale_info.to_account_info(),
+                })
+            , quote_amount
+        )?;
+    } else {
+        system_program::transfer(
+            CpiContext::new(
+                ctx.accounts.system_program.to_account_info(), 
+                system_program::Transfer {
+                    from: ctx.accounts.buyer.to_account_info(),
+                    to: ctx.accounts.presale_wallet.to_account_info(),
+                })
+            , quote_amount
+        )?;
+    }
 
     msg!("Presale tokens transferred successfully.");
 
@@ -86,6 +100,10 @@ pub struct BuyToken<'info> {
         bump = presale_info.bump
     )]
     pub presale_info: Box<Account<'info, PresaleInfo>>,
+
+    #[account(mut)]
+    /// CHECK:
+    pub presale_wallet: AccountInfo<'info>,
     pub presale_authority: SystemAccount<'info>,
     #[account(
         init_if_needed,

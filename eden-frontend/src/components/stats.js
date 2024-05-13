@@ -17,7 +17,8 @@ import {
     PRESALE_PROGRAM_PUBKEY,
     PRESALE_SEED,
     PRESALE_AUTHORITY,
-    PRESALE_ID
+    PRESALE_ID,
+    TOKEN_DECIMAL
 } from "../constants";
 
 const PrettoSlider = styled(Slider)({
@@ -89,7 +90,6 @@ const Stats = () => {
                     program.programId
                 );
                 const info = await program.account.presaleInfo.fetch(presale_info);
-                console.log (Number(info.soldTokenAmount), ">?????????????")
                 setTotalBuyAmount(info.soldTokenAmount)
             } catch (error) {
                 console.log(error);
@@ -104,8 +104,8 @@ const Stats = () => {
 
     return (
         <div className="flex flex-col mt-4 text-black">
-            <div>Raised <span className="text-dark-green">{totalBuyAmount ? numberWithCommas(Number(totalBuyAmount / 1000000)) : 0}</span> of {numberWithCommas(TOKEN_PRESALE_HARDCAP)} EDN</div>
-            <PrettoSlider aria-label="Volume" value={Number(totalBuyAmount) / 100000 / 1000000} />
+            <div>Raised <span className="text-dark-green">{totalBuyAmount ? numberWithCommas(Number(totalBuyAmount / (10 ** TOKEN_DECIMAL))) : 0}</span> of {numberWithCommas(TOKEN_PRESALE_HARDCAP)} EDN</div>
+            <PrettoSlider aria-label="Volume" value={Number(totalBuyAmount) / TOKEN_PRESALE_HARDCAP / (10 ** TOKEN_DECIMAL)} />
         </div>
     )
 }

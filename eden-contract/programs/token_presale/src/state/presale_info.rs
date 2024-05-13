@@ -9,8 +9,6 @@ pub struct PresaleInfo {
     // pub quote_token_mint_address: Pubkey,
     pub sol_token_mint_address: Pubkey,
     pub usdt_token_mint_address: Pubkey,
-    pub associated_sol_presale_wallet: Pubkey,
-    pub associated_usdt_presale_wallet: Pubkey,
     pub wallet_count: u64,
     // Softcap
     pub softcap_amount: u64,

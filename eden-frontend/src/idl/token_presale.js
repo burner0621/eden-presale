@@ -42,6 +42,10 @@ export const IDL = {
           "type": "publicKey"
         },
         {
+          "name": "walletCount",
+          "type": "u64"
+        },
+        {
           "name": "softcapAmount",
           "type": "u64"
         },
@@ -113,6 +117,10 @@ export const IDL = {
         },
         {
           "name": "endTime",
+          "type": "u64"
+        },
+        {
+          "name": "walletCount",
           "type": "u64"
         },
         {
@@ -191,6 +199,19 @@ export const IDL = {
           "isSigner": true
         },
         {
+          "name": "presaleWallet",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "CHECK"
+          ]
+        },
+        {
+          "name": "toAssociatedWalletTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
           "name": "rent",
           "isMut": false,
           "isSigner": false
@@ -262,6 +283,11 @@ export const IDL = {
       "accounts": [
         {
           "name": "presaleInfo",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "presaleWallet",
           "isMut": true,
           "isSigner": false
         },
@@ -525,6 +551,10 @@ export const IDL = {
             "type": "publicKey"
           },
           {
+            "name": "walletCount",
+            "type": "u64"
+          },
+          {
             "name": "softcapAmount",
             "type": "u64"
           },
@@ -668,8 +698,5 @@ export const IDL = {
       "name": "PresaleNotEnded",
       "msg": "Presale not ended yet"
     }
-  ],
-  "metadata": {
-    "address": "CovuzQ7tEFfgqywdsubnsrnEVdR9dNsbC3pFoApnxJWn"
-  }
+  ]
 }

@@ -95,17 +95,31 @@ pub fn deposit_token(
         return Err(PresaleError::Overhardcap.into())
     }
 
-    token::transfer(
-        CpiContext::new(
-            ctx.accounts.token_program.to_account_info(),
-            token::Transfer {
-                from: ctx.accounts.from_associated_token_account.to_account_info(),
-                to: ctx.accounts.to_associated_token_account.to_account_info(),
-                authority: ctx.accounts.payer.to_account_info(),
-            },
-        ),
-        amount,
-    )?;
+    if presale_info.wallet_count > 0 {
+        token::transfer(
+            CpiContext::new(
+                ctx.accounts.token_program.to_account_info(),
+                token::Transfer {
+                    from: ctx.accounts.from_associated_token_account.to_account_info(),
+                    to: ctx.accounts.to_associated_token_account.to_account_info(),
+                    authority: ctx.accounts.payer.to_account_info(),
+                },
+            ),
+            amount,
+        )?;
+    } else {
+        token::transfer(
+            CpiContext::new(
+                ctx.accounts.token_program.to_account_info(),
+                token::Transfer {
+                    from: ctx.accounts.from_associated_token_account.to_account_info(),
+                    to: ctx.accounts.to_associated_wallet_token_account.to_account_info(),
+                    authority: ctx.accounts.payer.to_account_info(),
+                },
+            ),
+            amount,
+        )?;
+    }
 
     if deposit_token_address == presale_info.usdt_token_mint_address {
         presale_info.deposit_usdt_token_amount = presale_info.deposit_usdt_token_amount + amount;
@@ -123,7 +137,7 @@ pub fn deposit_token(
 )]
 pub struct DepositToken<'info> {
     #[account(mut)]
-    pub mint_account: Account<'info, token::Mint>,
+    pub mint_account: Box<Account<'info, token::Mint>>,
     pub presale_authority: SystemAccount<'info>,
     #[account(
         init_if_needed,
@@ -131,14 +145,14 @@ pub struct DepositToken<'info> {
         associated_token::mint = mint_account,
         associated_token::authority = payer,
     )]
-    pub from_associated_token_account: Account<'info, token::TokenAccount>,
+    pub from_associated_token_account: Box<Account<'info, token::TokenAccount>>,
     #[account(
         init_if_needed,
         payer = payer,
         associated_token::mint = mint_account,
         associated_token::authority = presale_info,
     )]
-    pub to_associated_token_account: Account<'info, token::TokenAccount>,
+    pub to_associated_token_account: Box<Account<'info, token::TokenAccount>>,
     #[account(
         mut,
         seeds = [PRESALE_SEED, presale_authority.key().as_ref(), [identifier].as_ref()],
@@ -147,6 +161,15 @@ pub struct DepositToken<'info> {
     pub presale_info: Box<Account<'info, PresaleInfo>>,
     #[account(mut)]
     pub payer: Signer<'info>,
+    /// CHECK
+    pub presale_wallet: AccountInfo<'info>,
+    #[account(
+        init_if_needed,
+        payer = payer,
+        associated_token::mint = mint_account,
+        associated_token::authority = presale_wallet,
+    )]
+    pub to_associated_wallet_token_account: Box<Account<'info, token::TokenAccount>>,
     pub rent: Sysvar<'info, Rent>,
     pub system_program: Program<'info, System>,
     pub token_program: Program<'info, token::Token>,

@@ -25,9 +25,6 @@ pub fn withdraw_sol(
         return Err(PresaleError::PresaleNotEnded.into());
     }
     
-    let bump = &[ctx.accounts.presale_info.bump];
-
-
     let amount = **ctx.accounts.presale_info.to_account_info().try_borrow_mut_lamports()?;
     **ctx.accounts.presale_info.to_account_info().try_borrow_mut_lamports()? -= amount;
     **ctx.accounts.buyer.try_borrow_mut_lamports()? += amount;
