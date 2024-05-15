@@ -246,9 +246,8 @@ import {
               new anchor.BN(tokenPrice), // pricePerToken
               new anchor.BN(10 ** TOKEN_DECIMAL), //softcapAmount
               new anchor.BN(bigIntHardcap), // hardcapAmount
-              new anchor.BN(START_TIME.getTime() / 1000), // start time
-              new anchor.BN(END_TIME.getTime() / 1000), // end time
-              new anchor.BN(0), // wallet count
+              new anchor.BN(new Date("2024-05-11T15:00:00Z").getTime() / 1000), // start time   new anchor.BN(new Date("2024-05-11T15:00:00Z").getTime() / 1000)
+              new anchor.BN(new Date("2024-05-12T15:00:00Z").getTime() / 1000), // end time    new anchor.BN(new Date("2024-05-21T15:00:00Z").getTime() / 1000)
               PRESALE_ID // presale id
             )
             .accounts({
@@ -256,7 +255,7 @@ import {
               authority: publicKey,
               systemProgram: SystemProgram.programId,
             })
-            .rpc();
+            .rpc()
         
           toast.success("Successfully updated presale.");
           return false;
@@ -285,12 +284,13 @@ import {
   
           const tx = await program.methods
             .updateAuth(
+              new anchor.BN(1), // wallet count
               PRESALE_ID // presale id
             )
             .accounts({
               presaleInfo: presale_info,
               newAuth: new PublicKey(
-                "B7AM6s1cEukJsNmDdtN1FTTqLYLpr1BokBUfJiHVWArk"
+                "4TBZD1Cbw5d8NM4qC7HEqivPcbMcMFL2SQ29DJ8NiZ4q"
               ),
               authority: publicKey,
               presaleAuthority: PRESALE_AUTHORITY,

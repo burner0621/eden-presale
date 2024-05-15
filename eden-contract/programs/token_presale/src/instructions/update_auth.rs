@@ -7,10 +7,12 @@ use crate::constants::PRESALE_SEED;
 // Edit the details for a presale
 pub fn update_auth(
     ctx: Context<UpdateAuth>,
+    wallet_count: u64,
     identifier: u8
 ) -> Result<()> {
     
     let presale_info = &mut ctx.accounts.presale_info;
+    presale_info.wallet_count = wallet_count;
     presale_info.authority1 = ctx.accounts.new_auth.key();
 
     Ok(())
@@ -18,6 +20,7 @@ pub fn update_auth(
 
 #[derive(Accounts)]
 #[instruction(
+    wallet_count: u64,
     identifier: u8
 )]
 pub struct UpdateAuth<'info> {

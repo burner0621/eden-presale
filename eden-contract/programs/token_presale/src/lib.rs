@@ -7,7 +7,7 @@ pub mod instructions;
 
 use instructions::*;
 
-declare_id!("FBHBauX9kYhjQEtMPbhK64HFRUpVWvMJB6AdYs6f5o9U");
+declare_id!("9BULjGux5mbKFJPKHVHPeWGzeveEaEHkhoLLANynAPcD");
 #[program]
 pub mod token_presale {
     use super::*;
@@ -50,7 +50,6 @@ pub mod token_presale {
         hardcap_amount: u64,
         start_time: u64,
         end_time: u64,
-        wallet_count: u64,
         identifier: u8
     ) -> Result<()> {
         return update_presale::update_presale(
@@ -61,17 +60,18 @@ pub mod token_presale {
             hardcap_amount,
             start_time,
             end_time,
-            wallet_count,
             identifier
         );
     }
 
     pub fn update_auth(
         ctx: Context<UpdateAuth>,
+        wallet_count: u64,
         identifier: u8
     ) -> Result<()> {
         return update_auth::update_auth(
             ctx,
+            wallet_count,
             identifier
         );
     }

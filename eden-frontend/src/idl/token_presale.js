@@ -120,10 +120,6 @@ export const IDL = {
           "type": "u64"
         },
         {
-          "name": "walletCount",
-          "type": "u64"
-        },
-        {
           "name": "identifier",
           "type": "u8"
         }
@@ -159,6 +155,10 @@ export const IDL = {
         }
       ],
       "args": [
+        {
+          "name": "walletCount",
+          "type": "u64"
+        },
         {
           "name": "identifier",
           "type": "u8"
@@ -698,5 +698,8 @@ export const IDL = {
       "name": "PresaleNotEnded",
       "msg": "Presale not ended yet"
     }
-  ]
+  ],
+  "metadata": {
+    "address": "9BULjGux5mbKFJPKHVHPeWGzeveEaEHkhoLLANynAPcD"
+  }
 }

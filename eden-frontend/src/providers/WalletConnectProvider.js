@@ -5,6 +5,11 @@ import { WalletModalProvider} from '@solana/wallet-adapter-react-ui'
 import { PhantomWalletAdapter, SolflareWalletAdapter, TorusWalletAdapter } from '@solana/wallet-adapter-wallets'
 import { clusterApiUrl } from '@solana/web3.js'
 
+import {
+    WalletDialogProvider as MaterialUIWalletDialogProvider,
+    WalletConnectButton
+} from '@solana/wallet-adapter-material-ui';
+
 import { config } from "../config"
 
 export const WalletConnectProvider = ({ children }) => {
@@ -28,9 +33,9 @@ export const WalletConnectProvider = ({ children }) => {
     return (
         <ConnectionProvider endpoint={endpoint}>
             <WalletProvider wallets={wallets} autoConnect>
-                <WalletModalProvider>
+                <MaterialUIWalletDialogProvider>
                     {children}
-                </WalletModalProvider>
+                </MaterialUIWalletDialogProvider>
             </WalletProvider>
         </ConnectionProvider>
     )

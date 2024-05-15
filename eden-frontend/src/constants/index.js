@@ -1,7 +1,7 @@
 import { PublicKey } from "@solana/web3.js";
 
 export const PRESALE_PROGRAM_PUBKEY = new PublicKey(
-  "FBHBauX9kYhjQEtMPbhK64HFRUpVWvMJB6AdYs6f5o9U"
+  "9BULjGux5mbKFJPKHVHPeWGzeveEaEHkhoLLANynAPcD"
 );
 
 export const TOKEN_PUBKEY = new PublicKey(

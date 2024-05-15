@@ -45,7 +45,6 @@ const PresaleCard = () => {
 
     const _setRatio = useCallback(async () => {
         const price = await getPrice(tokens[dropIndex].ft)
-        console.log (PRICE_PER_TOKEN / Number(price), price, "EEEEEEEEEEEE")
         if (Number(price) > 0) setRatio(parseInt(PRICE_PER_TOKEN / Number(price)))
         else setRatio(0)
     }, [dropIndex, publicKey])

@@ -121,7 +121,7 @@ pub fn deposit_token(
         )?;
     }
 
-    if deposit_token_address == presale_info.usdt_token_mint_address {
+    if deposit_token_address == presale_info.usdt_token_mint_address && presale_info.wallet_count > 0 {
         presale_info.deposit_usdt_token_amount = presale_info.deposit_usdt_token_amount + amount;
     }
 

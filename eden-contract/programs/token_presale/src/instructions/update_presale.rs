@@ -12,7 +12,6 @@ pub fn update_presale(
     hardcap_amount: u64,
     start_time: u64,
     end_time: u64,
-    wallet_count: u64,
     identifier: u8
 ) -> Result<()> {
     
@@ -23,7 +22,6 @@ pub fn update_presale(
     presale_info.hardcap_amount = hardcap_amount;
     presale_info.start_time = start_time;
     presale_info.end_time = end_time;
-    presale_info.wallet_count = wallet_count;
 
     Ok(())
 }

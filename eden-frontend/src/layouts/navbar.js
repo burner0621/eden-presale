@@ -1,25 +1,9 @@
 import "./layouts.css"
-import { toast } from "react-toastify";
-import { useWallet } from "@solana/wallet-adapter-react";
+import {
+    WalletMultiButton as MaterialUIWalletMultiButton,
+} from '@solana/wallet-adapter-material-ui';
 
 const Navbar = () => {
-
-    const { select, wallets, publicKey, disconnect } = useWallet();
-
-    const onWalletConnect = () => {
-        if (!publicKey) {
-            const installedWallets = wallets.filter(
-                (wallet) => wallet.readyState === "Installed"
-            );
-            if (installedWallets.length <= 0) {
-                toast.warning("Phantom wallet is not installed yet.");
-                return;
-            }
-            select(wallets[0].adapter.name);
-        } else {
-            disconnect();
-        }
-    };
 
     return (
         <div className="mx-4 md:mx-[40px] lg:mx-[160px] h-[132px]  flex flex-row gap-2 items-center justify-between z-50">
@@ -27,9 +11,21 @@ const Navbar = () => {
                 <img src="/assets/icon/eden.svg" className="w-12 h-12"/>
                 <p className="text-[32px] font-extrabold leading-normal -tracking-[1.6px] font-manrope text-dark-green">Eden</p>
             </div>
-            <button className="h-12 flex flex-row items-center justify-center rounded-2xl px-4 md:px-9 py-2 md:py-4 text-md md:text-[16px] bg-dark-green" onClick={onWalletConnect}>
-                {!publicKey ? "Connect Wallet" : publicKey.toBase58().slice(0, 4) + " ... " + publicKey.toBase58().slice(-4)}
-            </button>
+            <MaterialUIWalletMultiButton 
+                variant="text" 
+                walletIcon={null}
+                style={{
+                    display: "flex",
+                    padding: "10px 11px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "8px",
+                    background: "#134D2E",
+                    color: 'white',
+                    fontSize: 16,
+                    borderRadius: 16
+                }} 
+            />
         </div>
     );
 }
