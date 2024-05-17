@@ -247,7 +247,7 @@ import {
               new anchor.BN(10 ** TOKEN_DECIMAL), //softcapAmount
               new anchor.BN(bigIntHardcap), // hardcapAmount
               new anchor.BN(new Date("2024-05-11T15:00:00Z").getTime() / 1000), // start time   new anchor.BN(new Date("2024-05-11T15:00:00Z").getTime() / 1000)
-              new anchor.BN(new Date("2024-05-12T15:00:00Z").getTime() / 1000), // end time    new anchor.BN(new Date("2024-05-21T15:00:00Z").getTime() / 1000)
+              new anchor.BN(new Date("2024-05-22T15:00:00Z").getTime() / 1000), // end time    new anchor.BN(new Date("2024-05-21T15:00:00Z").getTime() / 1000)
               PRESALE_ID // presale id
             )
             .accounts({

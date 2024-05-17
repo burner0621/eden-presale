@@ -1,7 +1,7 @@
 import { PublicKey } from "@solana/web3.js";
 
 export const PRESALE_PROGRAM_PUBKEY = new PublicKey(
-  "9BULjGux5mbKFJPKHVHPeWGzeveEaEHkhoLLANynAPcD"
+  "GA6H41W61usD2hntiQYGah1oRMjoKv1mHyuVnebCXXCq"
 );
 
 export const TOKEN_PUBKEY = new PublicKey(
@@ -14,7 +14,7 @@ export const PRESALE_WALLET_PUBKEY = new PublicKey(
 
 export const PRESALE_SEED = "CLUB_PRESALE_SEED";
 export const USER_SEED = "CLUB_USER_SEED";
-export const PRESALE_ID = 2;
+export const PRESALE_ID = 1;
 
 export const PRESALE_AUTHORITY = new PublicKey(
   "B7AM6s1cEukJsNmDdtN1FTTqLYLpr1BokBUfJiHVWArk"

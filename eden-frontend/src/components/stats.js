@@ -105,7 +105,7 @@ const Stats = () => {
     return (
         <div className="flex flex-col mt-4 text-black">
             <div>Raised <span className="text-dark-green">{totalBuyAmount ? numberWithCommas(Number(totalBuyAmount / (10 ** TOKEN_DECIMAL))) : 0}</span> of {numberWithCommas(TOKEN_PRESALE_HARDCAP)} EDN</div>
-            <PrettoSlider aria-label="Volume" value={Number(totalBuyAmount) / TOKEN_PRESALE_HARDCAP / (10 ** TOKEN_DECIMAL)} />
+            <PrettoSlider aria-label="Volume" value={Number(totalBuyAmount) * 100 / TOKEN_PRESALE_HARDCAP / (10 ** TOKEN_DECIMAL)} />
         </div>
     )
 }

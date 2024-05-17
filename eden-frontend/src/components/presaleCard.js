@@ -18,7 +18,8 @@ import usePresale from "../hooks/usePresale.js"
 
 import {
     USDT_TOKEN_PUBKEY,
-    PRICE_PER_TOKEN
+    PRICE_PER_TOKEN,
+    SOL_PRICEFEED_ID
 } from "../constants";
 
 const PresaleCard = () => {

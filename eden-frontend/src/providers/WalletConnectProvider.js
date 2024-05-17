@@ -28,7 +28,7 @@ export const WalletConnectProvider = ({ children }) => {
         return clusterApiUrl(network)
     }, [network])
 
-    const wallets = useMemo(() => [new PhantomWalletAdapter(), new SolflareWalletAdapter({ network }), new TorusWalletAdapter()], [network])
+    const wallets = useMemo(() => [new PhantomWalletAdapter(), new SolflareWalletAdapter(), new TorusWalletAdapter()], [network])
 
     return (
         <ConnectionProvider endpoint={endpoint}>
