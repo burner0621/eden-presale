@@ -12,7 +12,7 @@ pub fn update_presale(
     hardcap_amount: u64,
     start_time: u64,
     end_time: u64,
-    identifier: u8
+    _identifier: u8
 ) -> Result<()> {
     
     let presale_info = &mut ctx.accounts.presale_info;

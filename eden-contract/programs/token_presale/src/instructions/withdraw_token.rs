@@ -18,7 +18,7 @@ pub fn withdraw_token(
     let withdrawnToken = ctx.accounts.presale_token_mint_account.key();
     let bump = &[presale_info.bump];
 
-    let cur_timestamp = u64::try_from(Clock::get()?.unix_timestamp).unwrap();;
+    let cur_timestamp = u64::try_from(Clock::get()?.unix_timestamp).unwrap();
     if presale_info.end_time > cur_timestamp {
         msg!("Presale not ended yet.");
         return Err(PresaleError::PresaleNotEnded.into());

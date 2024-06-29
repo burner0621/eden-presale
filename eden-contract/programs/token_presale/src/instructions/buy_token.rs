@@ -19,7 +19,7 @@ pub fn buy_token(
 
     let presale_info = &mut ctx.accounts.presale_info;
     let user_info = &mut ctx.accounts.user_info;
-    let cur_timestamp = u64::try_from(Clock::get()?.unix_timestamp).unwrap();;
+    let cur_timestamp = u64::try_from(Clock::get()?.unix_timestamp).unwrap();
 
     if quote_amount < 50000000 || quote_amount > 10000000000 {
         msg!("Token amount should be from 0.5 sol to 10 sol.");

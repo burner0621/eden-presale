@@ -18,7 +18,7 @@ pub fn claim_token(
     let presale_info = &mut ctx.accounts.presale_info;
     let bump = &[presale_info.bump];
 
-    let cur_timestamp = u64::try_from(Clock::get()?.unix_timestamp).unwrap();;
+    let cur_timestamp = u64::try_from(Clock::get()?.unix_timestamp).unwrap();
 
     // get time and compare with start and end time
     if presale_info.end_time > cur_timestamp {

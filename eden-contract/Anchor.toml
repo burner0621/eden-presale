@@ -1,14 +1,17 @@
+[toolchain]
+
 [features]
-seeds = false
+resolution = true
 skip-lint = false
+
 [programs.devnet]
-token_presale = "GA6H41W61usD2hntiQYGah1oRMjoKv1mHyuVnebCXXCq"
+token_presale = "Dgq3KKLCnxHWbJzMRSroGfm1zq7RjagmUVWG8e7rKeyz"
 
 [registry]
 url = "https://api.devnet.solana.com/"
 
 [provider]
-cluster = "devnet"
+cluster = "Devnet"
 wallet = "./token_presale-keypair.json"
 
 [scripts]

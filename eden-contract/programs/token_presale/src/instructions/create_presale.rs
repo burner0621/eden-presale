@@ -1,7 +1,7 @@
 use anchor_lang::prelude::*;
 
-use crate::state::PresaleInfo;
 use crate::constants::PRESALE_SEED;
+use crate::state::PresaleInfo;
 
 // Edit the details for a presale
 #[allow(clippy::too_many_arguments)]
@@ -11,15 +11,14 @@ pub fn create_presale(
     sol_token_mint_address: Pubkey,
     usdt_token_mint_address: Pubkey,
     wallet_count: u64,
-    softcap_amount:u64,
-    hardcap_amount:u64,
+    softcap_amount: u64,
+    hardcap_amount: u64,
     max_token_amount_per_address: u64,
     price_per_token: u64,
     start_time: u64,
     end_time: u64,
-    identifier: u8
+    identifier: u8,
 ) -> Result<()> {
-    
     let presale_info = &mut ctx.accounts.presale_info;
     let authority = &ctx.accounts.authority;
 
@@ -41,7 +40,7 @@ pub fn create_presale(
     presale_info.identifier = identifier;
     presale_info.authority = authority.key();
     presale_info.authority1 = authority.key();
-    presale_info.bump =  *ctx.bumps.get("presale_info").unwrap();
+    presale_info.bump = ctx.bumps.presale_info;
 
     msg!(
         "Presale has created for token: {}",
@@ -76,11 +75,11 @@ pub struct CreatePresale<'info> {
         bump
     )]
     pub presale_info: Box<Account<'info, PresaleInfo>>,
-    
+
     // Set the authority to the transaction signer
     #[account(mut)]
     pub authority: Signer<'info>,
-    
+
     // Must be included when initializing an account
     pub system_program: Program<'info, System>,
 }

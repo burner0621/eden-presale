@@ -6,7 +6,6 @@ pub struct PresaleInfo {
     // Mint address of the presale token
     pub token_mint_address: Pubkey,
     // Mint address of the quote token
-    // pub quote_token_mint_address: Pubkey,
     pub sol_token_mint_address: Pubkey,
     pub usdt_token_mint_address: Pubkey,
     pub wallet_count: u64,

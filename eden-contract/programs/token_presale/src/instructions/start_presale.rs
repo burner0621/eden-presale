@@ -10,7 +10,7 @@ pub fn start_presale(
     identifier: u8,
 ) -> Result<()> {
     
-    let presale = &mut ctx.accounts.presale_info;
+    let _presale = &mut ctx.accounts.presale_info;
 
     // Set the presale details to the parameters given
     // presale.is_live = true;

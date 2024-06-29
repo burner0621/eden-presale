@@ -25,7 +25,7 @@ pub fn deposit_token(
     let presale_info = &mut ctx.accounts.presale_info;
     let deposit_token_address = ctx.accounts.mint_account.key();
     let user_info = &mut ctx.accounts.user_info;
-    let cur_timestamp = u64::try_from(Clock::get()?.unix_timestamp).unwrap();;
+    let cur_timestamp = u64::try_from(Clock::get()?.unix_timestamp).unwrap();
 
     if deposit_token_address == presale_info.token_mint_address {
         token::transfer(
